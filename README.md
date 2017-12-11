@@ -6,7 +6,7 @@ This process runs on a gateway, captures Bluetooth Low Energy Advertising packet
 
 Only one instance of this process may be run at any time.
 
-This process must be run with privilege (`sudo` or directly as the root user) on order to access the Bluetooth device.  
+This process must be run with privilege (`sudo` or directly as the root user) in order to access the Bluetooth device.  
 
 ## Building
 
@@ -21,7 +21,7 @@ Get the latest release from [here](https://github.com/sixgill/ble-client/release
 ## Using
 
 - scp the resulting binary to the target machine
-- Change values in `mqtt-client-conf.json` as needed (parameters are described below), 
+- Change values in `ble-client-conf.json` as needed (parameters are described below), 
 - Copy the `ble-client-conf.json` file to `~/.sense/`, and 
 - Run `$ <sudo> ./ble-client <optional flags>`
 
