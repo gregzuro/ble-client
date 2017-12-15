@@ -123,13 +123,13 @@ func main() {
 		log.Println("doing registration (no jwt file present or -force-register specified)")
 		// do registration
 		url := config.SenseIngressAddress + "/v1/registration"
-		statusCode, registrationResponse, err := DoRegistration(url, config.SenseIngressAPIKey)
+		statusCode, registrationResponse, resp, err := DoRegistration(url, config.SenseIngressAPIKey)
 		if err != nil {
 			log.Println("unable to do registration (with error): " + err.Error())
 			os.Exit(1)
 		}
 		if statusCode != 200 {
-			log.Println("unable to do registration (with status code): ", statusCode)
+			log.Println("unable to do registration (with status code, response): ", statusCode, resp.String())
 			os.Exit(1)
 		}
 
@@ -303,7 +303,7 @@ func byteAddressToString(b []byte) string {
 }
 
 // DoRegistration registers this application with the Sixgill Sense API server
-func DoRegistration(url, apiKey string) (int, pb.RegistrationResponse, error) {
+func DoRegistration(url, apiKey string) (int, pb.RegistrationResponse, resty.Response, error) {
 
 	request := &pb.RegistrationRequest{
 		ApiKey: apiKey,
@@ -327,7 +327,7 @@ func DoRegistration(url, apiKey string) (int, pb.RegistrationResponse, error) {
 		SetContentLength(true).
 		Post(url)
 
-	return resp.StatusCode(), *response, err
+	return resp.StatusCode(), *response, *resp, err
 }
 
 // GetJwtFromFile gets the previously stored JWT from the file
